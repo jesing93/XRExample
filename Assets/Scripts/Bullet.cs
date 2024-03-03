@@ -14,12 +14,9 @@ public class Bullet : MonoBehaviour
             isHit = true;
             if (collision.gameObject.tag == targetTag)
             {
-                Debug.Log("Points!");
+                collision.gameObject.GetComponent<Target>().Hit();
             }
-            else
-            {
-                Destroy(this.gameObject);
-            }
+            Destroy(this.gameObject);
         }
     }
 }
