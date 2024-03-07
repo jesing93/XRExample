@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1258885742755497899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4494946203318406399}
+  - component: {fileID: 7443659095443054687}
+  - component: {fileID: 7240728557523148502}
+  m_Layer: 11
+  m_Name: TargetHolder
+  m_TagString: TargetHolder
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4494946203318406399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258885742755497899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7443659095443054687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258885742755497899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed7762a95b9f6834ea93ab9b54e18f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPref:
+  - {fileID: 3293021087577224816, guid: 3a28abc38fe4e5249b48f853b2bc0c2d, type: 3}
+  - {fileID: 3293021087577224816, guid: 9266a0eaa21b2244bab9776ba668e00a, type: 3}
+  - {fileID: 3293021087577224816, guid: 766f7df3ae970474b85f5e7663eea39a, type: 3}
+  - {fileID: 3293021087577224816, guid: 237154dcbcde1f14c9294d4488adcf54, type: 3}
+  - {fileID: 3293021087577224816, guid: 285d12b2dead50f438d25637b7233f32, type: 3}
+  - {fileID: 3293021087577224816, guid: e6ae2d47445b1ea4caf1cc5c484c9c99, type: 3}
+  - {fileID: 3293021087577224816, guid: 1dc5451b9278fc448aece2d11e8ceefb, type: 3}
+--- !u!135 &7240728557523148502
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258885742755497899}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

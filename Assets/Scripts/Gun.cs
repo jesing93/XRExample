@@ -38,6 +38,7 @@ public class Gun : MonoBehaviour
 
     private void ReturnToHolder()
     {
+        rb.useGravity = false;
         transform.parent = holderTransform;
         transform.localPosition = Vector3.zero;
     }

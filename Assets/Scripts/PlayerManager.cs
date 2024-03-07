@@ -6,7 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     //Region dedicated to the different Variables.
     #region Variables
-    private List<GameObject> targets;
+    private List<GameObject> targets = new();
     public static PlayerManager instance;
     #endregion
 
@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Add holder");
         if (other.CompareTag("TargetHolder"))
         {
             targets.Add(other.gameObject);
@@ -31,6 +32,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("Remove holder");
         if (other.CompareTag("TargetHolder"))
         {
             targets.Remove(other.gameObject);

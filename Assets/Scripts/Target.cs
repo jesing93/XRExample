@@ -39,7 +39,7 @@ public class Target : MonoBehaviour
         transform.DORotate(new Vector3(-90, transform.rotation.y, transform.rotation.z), 1.0f).SetEase(Ease.InOutQuad);
     }
 
-    private void Deactivate()
+    public void Deactivate()
     {
         isActive = false;
         transform.DORotate(new Vector3(-180, transform.rotation.y, transform.rotation.z), 1.0f).SetEase(Ease.InOutQuad).OnComplete(AskForDeletion);

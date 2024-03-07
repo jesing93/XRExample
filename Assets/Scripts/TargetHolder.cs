@@ -6,10 +6,12 @@ public class TargetHolder : MonoBehaviour
 {
     //Region dedicated to the different Variables.
     #region Variables
-    [SerializeField] GameObject targetPref;
+    [SerializeField] List<GameObject> targetPref;
     private GameObject target;
     private float inactiveTime = 100;
+    private float activeTime = 0;
     private bool isActive = false;
+    private bool isDeactivating = false;
     #endregion
 
     //Region deidcated to the different Getters/Setters.
@@ -22,11 +24,24 @@ public class TargetHolder : MonoBehaviour
     //Region dedicated to methods native to Unity.
     #region Unity Functions
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!isActive)
+        if (!isDeactivating)
         {
-            inactiveTime += Time.deltaTime;
+            if (isActive)
+            {
+                activeTime += Time.deltaTime;
+                if (activeTime > 5)
+                {
+                    isDeactivating = true;
+                    activeTime = 0;
+                    target.GetComponentInChildren<Target>().Deactivate();
+                }
+            }
+            else
+            {
+                inactiveTime += Time.deltaTime;
+            }
         }
     }
 
@@ -37,10 +52,11 @@ public class TargetHolder : MonoBehaviour
 
     public void Activate()
     {
+        Debug.Log("Activate holder");
         if (target == null)
         {
             isActive = true;
-            target = Instantiate(gameObject, transform);
+            target = Instantiate(targetPref[Random.Range(0, targetPref.Count)], transform);
             target.GetComponent<Target>().Activate();
             inactiveTime = 0;
         }
@@ -48,9 +64,11 @@ public class TargetHolder : MonoBehaviour
 
     public void DestroyTarget()
     {
+        Debug.Log("Destroy target");
         Destroy(target);
         target = null;
         isActive = false;
+        isDeactivating = false;
     }
 
     public bool IsValid()

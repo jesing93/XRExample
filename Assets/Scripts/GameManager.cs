@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     //Region dedicated to the different Variables.
     #region Variables
     private float lastActive;
-    private bool searchingTarget = true;
+    private bool searchingTarget = false;
     private float maxTime = 180;
     private float seconds;
     private int points = 0;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (isGameStarted)
         {
@@ -36,13 +36,13 @@ public class GameManager : MonoBehaviour
             if (seconds == 0) {
                 EndGame();
             }
-        }
-        if (!searchingTarget)
-        {
-            lastActive += Time.deltaTime;
-            if (lastActive > 5)
+            if (!searchingTarget)
             {
-                StartCoroutine(SearchTarget());
+                lastActive += Time.deltaTime;
+                if (lastActive > 5)
+                {
+                    StartCoroutine(SearchTarget());
+                }
             }
         }
     }
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SearchTarget()
     {
+        Debug.Log("Start searching");
         searchingTarget = true;
         lastActive = 0;
         TargetHolder target = null;

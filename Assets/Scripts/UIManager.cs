@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private GameObject menuPanel;
     private bool isMenuOpen = true;
+    private float startTime = 0;
 
     public static UIManager Instance;
     #endregion
@@ -39,6 +40,19 @@ public class UIManager : MonoBehaviour
             {
                 OnOpenMenu();
             }
+        }
+        if (OVRInput.Get(OVRInput.Button.One))
+        {
+            startTime += Time.deltaTime;
+            if(startTime > 1)
+            {
+                startTime = 0;
+                OnRestartGame();
+            }
+        }
+        else
+        {
+            startTime = 0;
         }
     }
     #endregion
@@ -69,6 +83,7 @@ public class UIManager : MonoBehaviour
 
     public void OnRestartGame()
     {
+        OnCloseMenu();
         GameManager.instance.EndGame();
         GameManager.instance.StartGame();
     }
