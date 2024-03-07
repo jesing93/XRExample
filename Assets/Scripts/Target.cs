@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 
@@ -9,24 +10,16 @@ public class Target : MonoBehaviour
     //Region dedicated to the different Variables.
     #region Variables
     private bool isActive = false;
-    private float inactiveTime = 100;
+    public bool isTiff = true;
     #endregion
 
     //Region dedicated to the different Getters/Setters.
     #region Getters/Setters
     public bool IsActive { get => isActive; }
-    public float InactiveTime { get => inactiveTime; }
     #endregion
 
     //Region dedicated to methods native to Unity.
     #region Unity Functions
-    private void Update()
-    {
-        if (!isActive)
-        {
-            inactiveTime += Time.deltaTime;
-        }
-    }
     #endregion
 
     //Region dedicated to Custom methods.
@@ -35,7 +28,7 @@ public class Target : MonoBehaviour
     {
         if(isActive)
         {
-            Debug.Log("Points!");
+            GameManager.instance.TargetHit(isTiff);
             Deactivate();
         }
     }
@@ -43,23 +36,18 @@ public class Target : MonoBehaviour
     public void Activate()
     {
         isActive = true;
-        inactiveTime = 0;
         transform.DORotate(new Vector3(-90, transform.rotation.y, transform.rotation.z), 1.0f).SetEase(Ease.InOutQuad);
     }
 
     private void Deactivate()
     {
         isActive = false;
-        transform.DORotate(new Vector3(-180, transform.rotation.y, transform.rotation.z), 1.0f).SetEase(Ease.InOutQuad);
+        transform.DORotate(new Vector3(-180, transform.rotation.y, transform.rotation.z), 1.0f).SetEase(Ease.InOutQuad).OnComplete(AskForDeletion);
     }
 
-    public bool IsValid()
+    private void AskForDeletion()
     {
-        if(!isActive && inactiveTime > 10)
-        {
-            return true;
-        }
-        return false;
+        GetComponentInParent<TargetHolder>().DestroyTarget();
     }
     #endregion
 }

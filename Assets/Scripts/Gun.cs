@@ -8,6 +8,39 @@ public class Gun : MonoBehaviour
     public float shootForce;
     public Transform shootPoint;
     public GunType type;
+    private Rigidbody rb;
+    public bool isHeld = true;
+    [SerializeField] private Transform holderTransform;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isHeld)
+        {
+            if (rb.velocity.magnitude < 0.1f)
+            {
+                ReturnToHolder();
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(!isHeld)
+        {
+            ReturnToHolder();
+        }
+    }
+
+    private void ReturnToHolder()
+    {
+        transform.parent = holderTransform;
+        transform.localPosition = Vector3.zero;
+    }
 
     public void TriggerPress()
     {

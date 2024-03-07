@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Target"))
+        if (other.CompareTag("TargetHolder"))
         {
             targets.Add(other.gameObject);
         }
@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Target"))
+        if (other.CompareTag("TargetHolder"))
         {
             targets.Remove(other.gameObject);
         }
@@ -40,13 +40,13 @@ public class PlayerManager : MonoBehaviour
 
     //Region dedicated to Custom methods.
     #region Custom Methods
-    public GameObject GetRandomTargetInArea()
+    public TargetHolder GetRandomTargetInArea()
     {
         if (targets.Count == 0)
         {
             return null;
         }
-        return targets[Random.Range(0, targets.Count)];
+        return targets[Random.Range(0, targets.Count)].GetComponentInChildren<TargetHolder>();
     }
     #endregion
 }
