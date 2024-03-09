@@ -84,7 +84,7 @@ public class UIManager : MonoBehaviour
     public void OnRestartGame()
     {
         OnCloseMenu();
-        GameManager.instance.EndGame();
+        GameManager.instance.EndGame(true);
         GameManager.instance.StartGame();
     }
 

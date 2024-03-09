@@ -36,13 +36,13 @@ public class Target : MonoBehaviour
     public void Activate()
     {
         isActive = true;
-        transform.DORotate(new Vector3(-90, transform.rotation.y, transform.rotation.z), 1.0f).SetEase(Ease.InOutQuad);
+        transform.DOLocalRotate(new Vector3(-90, transform.localRotation.y, transform.localRotation.z), 1.0f).SetEase(Ease.InOutQuad);
     }
 
     public void Deactivate()
     {
         isActive = false;
-        transform.DORotate(new Vector3(-180, transform.rotation.y, transform.rotation.z), 1.0f).SetEase(Ease.InOutQuad).OnComplete(AskForDeletion);
+        transform.DOLocalRotate(new Vector3(-180, transform.localRotation.y, transform.localRotation.z), 1.0f).SetEase(Ease.InOutQuad).OnComplete(AskForDeletion);
     }
 
     private void AskForDeletion()

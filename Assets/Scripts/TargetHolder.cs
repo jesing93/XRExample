@@ -8,10 +8,12 @@ public class TargetHolder : MonoBehaviour
     #region Variables
     [SerializeField] List<GameObject> targetPref;
     private GameObject target;
+    private AudioSource clickSound;
     private float inactiveTime = 100;
     private float activeTime = 0;
     private bool isActive = false;
     private bool isDeactivating = false;
+    private bool isWaitingActivation = false;
     #endregion
 
     //Region deidcated to the different Getters/Setters.
@@ -24,6 +26,11 @@ public class TargetHolder : MonoBehaviour
     //Region dedicated to methods native to Unity.
     #region Unity Functions
 
+    private void Awake()
+    {
+        clickSound = GetComponent<AudioSource>();
+    }
+
     private void FixedUpdate()
     {
         if (!isDeactivating)
@@ -31,7 +38,7 @@ public class TargetHolder : MonoBehaviour
             if (isActive)
             {
                 activeTime += Time.deltaTime;
-                if (activeTime > 5)
+                if (activeTime > 7.5f)
                 {
                     isDeactivating = true;
                     activeTime = 0;
@@ -40,7 +47,24 @@ public class TargetHolder : MonoBehaviour
             }
             else
             {
-                inactiveTime += Time.deltaTime;
+                if(inactiveTime > 5)
+                {
+                    float playerDistance = Vector3.Distance(transform.position, PlayerManager.instance.transform.position);
+                    if (playerDistance <= 10 && !isWaitingActivation)
+                    {
+                        isWaitingActivation = true;
+                        PlayerManager.instance.AllowTarget(this);
+                    }
+                    else if(playerDistance > 10 && isWaitingActivation)
+                    {
+                        isWaitingActivation = false;
+                        PlayerManager.instance.RemoveTarget(this);
+                    }
+                }
+                else
+                {
+                    inactiveTime += Time.deltaTime;
+                }
             }
         }
     }
@@ -56,9 +80,12 @@ public class TargetHolder : MonoBehaviour
         if (target == null)
         {
             isActive = true;
+            PlayerManager.instance.RemoveTarget(this);
             target = Instantiate(targetPref[Random.Range(0, targetPref.Count)], transform);
-            target.GetComponent<Target>().Activate();
+            target.GetComponentInChildren<Target>().Activate();
             inactiveTime = 0;
+            isWaitingActivation = false;
+            clickSound.Play();
         }
     }
 
@@ -73,7 +100,7 @@ public class TargetHolder : MonoBehaviour
 
     public bool IsValid()
     {
-        if(!isActive && inactiveTime > 10)
+        if(!isActive && inactiveTime > 5)
         {
             return true;
         }

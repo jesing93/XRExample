@@ -6,7 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     //Region dedicated to the different Variables.
     #region Variables
-    private List<GameObject> targets = new();
+    private List<TargetHolder> targets = new();
     public static PlayerManager instance;
     #endregion
 
@@ -21,23 +21,6 @@ public class PlayerManager : MonoBehaviour
     {
         instance = this;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Add holder");
-        if (other.CompareTag("TargetHolder"))
-        {
-            targets.Add(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        Debug.Log("Remove holder");
-        if (other.CompareTag("TargetHolder"))
-        {
-            targets.Remove(other.gameObject);
-        }
-    }
     #endregion
 
     //Region dedicated to Custom methods.
@@ -48,7 +31,17 @@ public class PlayerManager : MonoBehaviour
         {
             return null;
         }
-        return targets[Random.Range(0, targets.Count)].GetComponentInChildren<TargetHolder>();
+        return targets[Random.Range(0, targets.Count)];
+    }
+
+    public void AllowTarget(TargetHolder newTarget)
+    {
+        targets.Add(newTarget);
+    }
+
+    public void RemoveTarget(TargetHolder oldTarget)
+    {
+        targets.Remove(oldTarget);
     }
     #endregion
 }
